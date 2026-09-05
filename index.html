@@ -1,1152 +1,418 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recrutements — Lumalia</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --lumalia-bg: #0a0f0d;
-            --lumalia-surface: #111916;
-            --lumalia-surface-2: #1a211e;
-            --lumalia-surface-3: #242c28;
-            --lumalia-border: #2a3530;
-            --lumalia-text: #e8f0ec;
-            --lumalia-text-dim: #8a9a90;
-            --lumalia-text-muted: #5a6a62;
-            --lumalia-green: #4ade80;
-            --lumalia-green-dim: #22c55e;
-            --lumalia-green-glow: rgba(74, 222, 128, 0.15);
-            --lumalia-cyan: #22d3ee;
-            --lumalia-cyan-dim: #06b6d4;
-            --lumalia-cyan-glow: rgba(34, 211, 238, 0.15);
-            --lumalia-amber: #fbbf24;
-            --lumalia-red: #f87171;
-            --radius-sm: 6px;
-            --radius-md: 10px;
-            --radius-lg: 14px;
-            --radius-xl: 20px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: var(--lumalia-bg);
-            color: var(--lumalia-text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* ===== NAVBAR ===== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            background: rgba(10, 15, 13, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--lumalia-border);
-            padding: 0 24px;
-        }
-
-        .navbar-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 64px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--lumalia-text);
-        }
-
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--lumalia-green), var(--lumalia-cyan));
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--lumalia-bg);
-        }
-
-        .logo-text {
-            font-weight: 600;
-            font-size: 18px;
-            letter-spacing: -0.3px;
-        }
-
-        .logo-text span {
-            color: var(--lumalia-green);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .nav-links a {
-            color: var(--lumalia-text-dim);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 8px 14px;
-            border-radius: var(--radius-sm);
-            transition: all 0.2s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--lumalia-text);
-            background: var(--lumalia-surface-2);
-        }
-
-        .nav-links a.active {
-            color: var(--lumalia-green);
-            background: var(--lumalia-green-glow);
-        }
-
-        .nav-cta {
-            background: linear-gradient(135deg, var(--lumalia-green), var(--lumalia-cyan-dim));
-            color: var(--lumalia-bg) !important;
-            font-weight: 600;
-            padding: 8px 18px !important;
-            border-radius: var(--radius-md) !important;
-        }
-
-        .nav-cta:hover {
-            opacity: 0.9;
-            color: var(--lumalia-bg) !important;
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            padding: 160px 24px 100px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-        }
-
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, var(--lumalia-green-glow), transparent 70%);
-            opacity: 0.6;
-        }
-
-        .hero-bg::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--lumalia-cyan-glow), transparent 70%);
-            opacity: 0.4;
-        }
-
-        .hero-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(74, 222, 128, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(74, 222, 128, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
-            background: var(--lumalia-green-glow);
-            border: 1px solid rgba(74, 222, 128, 0.2);
-            border-radius: 100px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--lumalia-green);
-            margin-bottom: 24px;
-        }
-
-        .hero-badge .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--lumalia-green);
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-        }
-
-        .hero h1 {
-            font-size: 52px;
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -1.5px;
-            margin-bottom: 20px;
-        }
-
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--lumalia-green), var(--lumalia-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 18px;
-            color: var(--lumalia-text-dim);
-            max-width: 520px;
-            margin: 0 auto 36px;
-            line-height: 1.7;
-        }
-
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 48px;
-            margin-top: 48px;
-        }
-
-        .hero-stat {
-            text-align: center;
-        }
-
-        .hero-stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--lumalia-text);
-            line-height: 1;
-        }
-
-        .hero-stat-label {
-            font-size: 13px;
-            color: var(--lumalia-text-dim);
-            margin-top: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* ===== SECTIONS ===== */
-        .section {
-            padding: 80px 24px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-
-        .section-label {
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--lumalia-green);
-            margin-bottom: 12px;
-        }
-
-        .section h2 {
-            font-size: 36px;
-            font-weight: 700;
-            letter-spacing: -0.8px;
-            margin-bottom: 12px;
-        }
-
-        .section p {
-            color: var(--lumalia-text-dim);
-            font-size: 16px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        /* ===== JOBS GRID ===== */
-        .jobs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 16px;
-        }
-
-        .job-card {
-            background: var(--lumalia-surface);
-            border: 1px solid var(--lumalia-border);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .job-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--lumalia-green), var(--lumalia-cyan));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .job-card:hover {
-            border-color: rgba(74, 222, 128, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .job-card:hover::before {
-            opacity: 1;
-        }
-
-        .job-card-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .job-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .job-icon.dev { background: rgba(34, 211, 238, 0.1); }
-        .job-icon.builder { background: rgba(251, 191, 36, 0.1); }
-        .job-icon.mod { background: rgba(248, 113, 113, 0.1); }
-        .job-icon.design { background: rgba(168, 85, 247, 0.1); }
-        .job-icon.community { background: rgba(74, 222, 128, 0.1); }
-        .job-icon.sysadmin { background: rgba(251, 191, 36, 0.1); }
-
-        .job-status {
-            padding: 4px 10px;
-            border-radius: 100px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .job-status.open {
-            background: rgba(74, 222, 128, 0.1);
-            color: var(--lumalia-green);
-            border: 1px solid rgba(74, 222, 128, 0.2);
-        }
-
-        .job-status.closed {
-            background: rgba(248, 113, 113, 0.1);
-            color: var(--lumalia-red);
-            border: 1px solid rgba(248, 113, 113, 0.2);
-        }
-
-        .job-card h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .job-card p {
-            font-size: 14px;
-            color: var(--lumalia-text-dim);
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-
-        .job-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .job-tag {
-            padding: 4px 10px;
-            background: var(--lumalia-surface-2);
-            border: 1px solid var(--lumalia-border);
-            border-radius: 100px;
-            font-size: 12px;
-            color: var(--lumalia-text-dim);
-        }
-
-        .job-card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid var(--lumalia-border);
-        }
-
-        .job-salary {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--lumalia-text);
-        }
-
-        .job-salary span {
-            font-size: 12px;
-            font-weight: 400;
-            color: var(--lumalia-text-muted);
-        }
-
-        .job-apply-btn {
-            padding: 8px 18px;
-            background: var(--lumalia-surface-2);
-            border: 1px solid var(--lumalia-border);
-            border-radius: var(--radius-md);
-            color: var(--lumalia-text);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .job-apply-btn:hover {
-            background: var(--lumalia-green);
-            border-color: var(--lumalia-green);
-            color: var(--lumalia-bg);
-        }
-
-        /* ===== WHY JOIN ===== */
-        .why-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 16px;
-        }
-
-        .why-card {
-            background: var(--lumalia-surface);
-            border: 1px solid var(--lumalia-border);
-            border-radius: var(--radius-lg);
-            padding: 28px;
-            transition: all 0.3s ease;
-        }
-
-        .why-card:hover {
-            border-color: rgba(74, 222, 128, 0.2);
-        }
-
-        .why-card .icon {
-            width: 44px;
-            height: 44px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            margin-bottom: 16px;
-        }
-
-        .why-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .why-card p {
-            font-size: 14px;
-            color: var(--lumalia-text-dim);
-            line-height: 1.6;
-        }
-
-        /* ===== APPLICATION FORM ===== */
-        .form-section {
-            background: var(--lumalia-surface);
-            border: 1px solid var(--lumalia-border);
-            border-radius: var(--radius-xl);
-            padding: 48px;
-            max-width: 640px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--lumalia-text);
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--lumalia-surface-2);
-            border: 1px solid var(--lumalia-border);
-            border-radius: var(--radius-md);
-            color: var(--lumalia-text);
-            font-size: 14px;
-            font-family: inherit;
-            transition: all 0.2s ease;
-            outline: none;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--lumalia-green);
-            box-shadow: 0 0 0 3px var(--lumalia-green-glow);
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: var(--lumalia-text-muted);
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .form-submit {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--lumalia-green), var(--lumalia-cyan-dim));
-            border: none;
-            border-radius: var(--radius-md);
-            color: var(--lumalia-bg);
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 8px;
-        }
-
-        .form-submit:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        /* ===== FAQ ===== */
-        .faq-list {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            background: var(--lumalia-surface);
-            border: 1px solid var(--lumalia-border);
-            border-radius: var(--radius-lg);
-            margin-bottom: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item:hover {
-            border-color: rgba(74, 222, 128, 0.2);
-        }
-
-        .faq-question {
-            padding: 20px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .faq-question:hover {
-            color: var(--lumalia-green);
-        }
-
-        .faq-question svg {
-            width: 20px;
-            height: 20px;
-            color: var(--lumalia-text-muted);
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .faq-item.active .faq-question svg {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 300px;
-            padding: 0 24px 20px;
-        }
-
-        .faq-answer p {
-            font-size: 14px;
-            color: var(--lumalia-text-dim);
-            line-height: 1.7;
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            border-top: 1px solid var(--lumalia-border);
-            padding: 48px 24px 32px;
-            text-align: center;
-        }
-
-        .footer-logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .footer-logo .logo-icon {
-            width: 32px;
-            height: 32px;
-            font-size: 16px;
-        }
-
-        .footer-logo .logo-text {
-            font-size: 16px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 24px;
-        }
-
-        .footer-links a {
-            color: var(--lumalia-text-dim);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--lumalia-text);
-        }
-
-        .footer-copy {
-            font-size: 13px;
-            color: var(--lumalia-text-muted);
-        }
-
-        /* ===== SCROLLBAR ===== */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--lumalia-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--lumalia-surface-3);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--lumalia-border);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero-stats {
-                gap: 24px;
-            }
-
-            .hero-stat-value {
-                font-size: 24px;
-            }
-
-            .section h2 {
-                font-size: 28px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .form-section {
-                padding: 28px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
-    </style>
-<base target="_blank">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recrutements — Lumalia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="navbar-inner">
-            <a href="https://lumania.fr" class="logo">
-                <div class="logo-icon">L</div>
-                <div class="logo-text">Luma<span>lia</span></div>
-            </a>
-            <div class="nav-links">
-                <a href="https://lumania.fr">Accueil</a>
-                <a href="#jobs" class="active">Recrutements</a>
-                <a href="#why">Pourquoi nous ?</a>
-                <a href="#faq">FAQ</a>
-                <a href="#apply" class="nav-cta">Postuler</a>
-            </div>
+  <!-- Particules background -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="https://lumania.fr" class="logo">
+        <div class="logo-icon">
+          <!-- Logo Lumalia SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="lumaliaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#f472b6"/>
+                <stop offset="50%" style="stop-color:#a78bfa"/>
+                <stop offset="100%" style="stop-color:#22d3ee"/>
+              </linearGradient>
+            </defs>
+            <rect width="100" height="100" rx="18" fill="url(#lumaliaGrad)"/>
+            <path d="M25 75 L25 25 L45 25 L45 55 L75 55 L75 75 Z" fill="#0a0f0d"/>
+            <path d="M55 25 L75 25 L75 45 L55 45 Z" fill="#0a0f0d" opacity="0.6"/>
+          </svg>
         </div>
-    </nav>
+        <div class="logo-text">Luma<span>lia</span></div>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="https://lumania.fr">Accueil</a>
+        <a href="#jobs" class="active">Recrutements</a>
+        <a href="#why">Pourquoi nous ?</a>
+        <a href="#faq">FAQ</a>
+        <a href="dashboard/">Dashboard</a>
+        <a href="#apply" class="nav-cta">Postuler</a>
+      </div>
+    </div>
+  </nav>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-bg">
-            <div class="hero-grid"></div>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <span class="dot"></span>
+        Plusieurs postes ouverts
+      </div>
+      <h1 class="reveal">
+        <span id="typing-text"></span><span class="cursor">|</span>
+      </h1>
+      <p class="reveal">Construis l'univers Minecraft de demain aux côtés d'une équipe passionnée. Crystal, Onyx, Green — chaque serveur a besoin de talents comme toi.</p>
+      <div class="hero-stats reveal">
+        <div class="hero-stat">
+          <div class="hero-stat-value" data-count="3">0</div>
+          <div class="hero-stat-label">Serveurs</div>
         </div>
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="dot"></span>
-                Plusieurs postes ouverts
-            </div>
-            <h1>Rejoins <span class="highlight">l'aventure Lumalia</span></h1>
-            <p>Construis l'univers Minecraft de demain aux côtés d'une équipe passionnée. Crystal, Onyx, Green — chaque serveur a besoin de talents comme toi.</p>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat-value">3</div>
-                    <div class="hero-stat-label">Serveurs</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-value">12</div>
-                    <div class="hero-stat-label">Membres staff</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-value">∞</div>
-                    <div class="hero-stat-label">Ambition</div>
-                </div>
-            </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value" data-count="12">0</div>
+          <div class="hero-stat-label">Membres staff</div>
         </div>
-    </section>
-
-    <!-- JOBS -->
-    <section class="section" id="jobs">
-        <div class="section-header">
-            <div class="section-label">01 · Les postes</div>
-            <h2>Choisis ton rôle</h2>
-            <p>Chaque poste est essentiel pour faire vivre l'univers Lumalia. Trouve celui qui te correspond.</p>
+        <div class="hero-stat">
+          <div class="hero-stat-value" data-count="1000">0</div>
+          <div class="hero-stat-label">Joueurs visés</div>
         </div>
-        <div class="jobs-grid">
-            <div class="job-card">
-                <div class="job-card-header">
-                    <div class="job-icon dev">💻</div>
-                    <span class="job-status open">Ouvert</span>
-                </div>
-                <h3>Développeur Java / Plugin</h3>
-                <p>Développe des plugins custom pour nos serveurs Java. Tu maîtrises Spigot/Paper et tu veux créer des mécaniques de jeu uniques.</p>
-                <div class="job-meta">
-                    <span class="job-tag">Java</span>
-                    <span class="job-tag">Spigot</span>
-                    <span class="job-tag">Paper</span>
-                    <span class="job-tag">Remote</span>
-                </div>
-                <div class="job-card-footer">
-                    <div class="job-salary">Bénévolat <span>· Expérience garantie</span></div>
-                    <button class="job-apply-btn" onclick="scrollToApply('Développeur Java')">Postuler</button>
-                </div>
-            </div>
+      </div>
+      <div class="hero-cta reveal">
+        <a href="#jobs" class="hero-btn hero-btn-primary">Voir les postes</a>
+        <a href="#apply" class="hero-btn hero-btn-secondary">Postuler directement</a>
+      </div>
+    </div>
+  </section>
 
-            <div class="job-card">
-                <div class="job-card-header">
-                    <div class="job-icon builder">🏗️</div>
-                    <span class="job-status open">Ouvert</span>
-                </div>
-                <h3>Builder / Architecte</h3>
-                <p>Conçois des mondes immersifs et des structures époustouflantes. Du spawn au monde minage, chaque bloc compte.</p>
-                <div class="job-meta">
-                    <span class="job-tag">WorldEdit</span>
-                    <span class="job-tag">VoxelSniper</span>
-                    <span class="job-tag">Créatif</span>
-                </div>
-                <div class="job-card-footer">
-                    <div class="job-salary">Bénévolat <span>· Portfolio requis</span></div>
-                    <button class="job-apply-btn" onclick="scrollToApply('Builder')">Postuler</button>
-                </div>
-            </div>
-
-            <div class="job-card">
-                <div class="job-card-header">
-                    <div class="job-icon mod">🛡️</div>
-                    <span class="job-status open">Ouvert</span>
-                </div>
-                <h3>Modérateur</h3>
-                <p>Veille au bon déroulement des parties, modère le chat et aide les joueurs. Tu es la pierre angulaire de la communauté.</p>
-                <div class="job-meta">
-                    <span class="job-tag">Communication</span>
-                    <span class="job-tag">Réseau</span>
-                    <span class="job-tag">Sérieux</span>
-                </div>
-                <div class="job-card-footer">
-                    <div class="job-salary">Bénévolat <span>· 16+ requis</span></div>
-                    <button class="job-apply-btn" onclick="scrollToApply('Modérateur')">Postuler</button>
-                </div>
-            </div>
-
-            <div class="job-card">
-                <div class="job-card-header">
-                    <div class="job-icon design">🎨</div>
-                    <span class="job-status open">Ouvert</span>
-                </div>
-                <h3>Graphiste / UI Designer</h3>
-                <p>Crée l'identité visuelle de Lumalia : logos, bannières, textures, interfaces. Donne vie à notre univers graphiquement.</p>
-                <div class="job-meta">
-                    <span class="job-tag">Photoshop</span>
-                    <span class="job-tag">Figma</span>
-                    <span class="job-tag">Illustrator</span>
-                </div>
-                <div class="job-card-footer">
-                    <div class="job-salary">Bénévolat <span>· Portfolio requis</span></div>
-                    <button class="job-apply-btn" onclick="scrollToApply('Graphiste')">Postuler</button>
-                </div>
-            </div>
-
-            <div class="job-card">
-                <div class="job-card-header">
-                    <div class="job-icon community">📢</div>
-                    <span class="job-status closed">Complet</span>
-                </div>
-                <h3>Community Manager</h3>
-                <p>Gère nos réseaux sociaux, Discord et annonces. Tu sais créer l'engagement et animer une communauté.</p>
-                <div class="job-meta">
-                    <span class="job-tag">Discord</span>
-                    <span class="job-tag">Twitter/X</span>
-                    <span class="job-tag">TikTok</span>
-                </div>
-                <div class="job-card-footer">
-                    <div class="job-salary">Bénévolat <span>· Recrutement fermé</span></div>
-                    <button class="job-apply-btn" disabled style="opacity:0.4;cursor:not-allowed;">Postuler</button>
-                </div>
-            </div>
-
-            <div class="job-card">
-                <div class="job-card-header">
-                    <div class="job-icon sysadmin">⚙️</div>
-                    <span class="job-status open">Ouvert</span>
-                </div>
-                <h3>SysAdmin / DevOps</h3>
-                <p>Gère l'infrastructure serveur, les déploiements et la sécurité. Tu maîtrises Linux, Docker et les réseaux.</p>
-                <div class="job-meta">
-                    <span class="job-tag">Linux</span>
-                    <span class="job-tag">Docker</span>
-                    <span class="job-tag">Réseau</span>
-                    <span class="job-tag">Sécurité</span>
-                </div>
-                <div class="job-card-footer">
-                    <div class="job-salary">Bénévolat <span>· Expertise requise</span></div>
-                    <button class="job-apply-btn" onclick="scrollToApply('SysAdmin')">Postuler</button>
-                </div>
-            </div>
+  <!-- JOBS -->
+  <section class="section" id="jobs">
+    <div class="section-header reveal">
+      <div class="section-label">01 · Les postes</div>
+      <h2>Choisis ton rôle</h2>
+      <p>Chaque poste est essentiel pour faire vivre l'univers Lumalia. Trouve celui qui te correspond.</p>
+    </div>
+    <div class="jobs-grid">
+      <div class="job-card reveal" data-poste="Développeur Java">
+        <div class="job-card-glow"></div>
+        <div class="job-card-header">
+          <div class="job-icon dev">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          </div>
+          <span class="job-status open">Ouvert</span>
         </div>
-    </section>
-
-    <!-- WHY JOIN -->
-    <section class="section" id="why">
-        <div class="section-header">
-            <div class="section-label">02 · Pourquoi nous ?</div>
-            <h2>Ce qui te attend chez Lumalia</h2>
-            <p>Rejoindre Lumalia, c'est plus qu'un poste. C'est une aventure.</p>
+        <h3>Développeur Java / Plugin</h3>
+        <p>Développe des plugins custom pour nos serveurs Java. Tu maîtrises Spigot/Paper et tu veux créer des mécaniques de jeu uniques.</p>
+        <div class="job-meta">
+          <span class="job-tag">Java</span>
+          <span class="job-tag">Spigot</span>
+          <span class="job-tag">Paper</span>
+          <span class="job-tag">Remote</span>
         </div>
-        <div class="why-grid">
-            <div class="why-card">
-                <div class="icon" style="background: rgba(74,222,128,0.1);">🚀</div>
-                <h3>Impact réel</h3>
-                <p>Ton travail est visible par des milliers de joueurs. Chaque feature, chaque build, chaque design compte.</p>
-            </div>
-            <div class="why-card">
-                <div class="icon" style="background: rgba(34,211,238,0.1);">👥</div>
-                <h3>Équipe soudée</h3>
-                <p>Une communauté de passionnés qui partagent la même vision. On avance ensemble, on apprend ensemble.</p>
-            </div>
-            <div class="why-card">
-                <div class="icon" style="background: rgba(251,191,36,0.1);">📈</div>
-                <h3>Expérience concrète</h3>
-                <p>Montée en compétences, projets réels à mettre sur ton CV, et un réseau dans l'univers du gaming.</p>
-            </div>
-            <div class="why-card">
-                <div class="icon" style="background: rgba(168,85,247,0.1);">🎮</div>
-                <h3>Environnement de jeu</h3>
-                <p>Accès privilégié aux serveurs, aux bêtas, et à l'évolution du projet en temps réel.</p>
-            </div>
+        <div class="job-card-footer">
+          <div class="job-salary">Bénévolat <span>· Expérience garantie</span></div>
+          <button class="job-apply-btn" onclick="scrollToApply('Développeur Java')">Postuler</button>
         </div>
-    </section>
+      </div>
 
-    <!-- APPLICATION FORM -->
-    <section class="section" id="apply">
-        <div class="section-header">
-            <div class="section-label">03 · Candidature</div>
-            <h2>Postule maintenant</h2>
-            <p>Remplis le formulaire ci-dessous. On te recontacte sous 48h.</p>
+      <div class="job-card reveal" data-poste="Builder">
+        <div class="job-card-glow"></div>
+        <div class="job-card-header">
+          <div class="job-icon builder">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M5 21V7l8-4 8 4v14"></path><path d="M9 21v-6h6v6"></path><path d="M10 9h4"></path><path d="M10 13h4"></path></svg>
+          </div>
+          <span class="job-status open">Ouvert</span>
         </div>
-        <div class="form-section">
-            <form id="applyForm" onsubmit="handleSubmit(event)">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="pseudo">Pseudo Minecraft *</label>
-                        <input type="text" id="pseudo" name="pseudo" placeholder="Ton pseudo in-game" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="discord">Discord *</label>
-                        <input type="text" id="discord" name="discord" placeholder="pseudo#0000" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" placeholder="ton@email.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="age">Âge *</label>
-                        <input type="number" id="age" name="age" placeholder="16" min="13" max="99" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="poste">Poste visé *</label>
-                    <select id="poste" name="poste" required>
-                        <option value="">Sélectionne un poste</option>
-                        <option value="Développeur Java">Développeur Java / Plugin</option>
-                        <option value="Builder">Builder / Architecte</option>
-                        <option value="Modérateur">Modérateur</option>
-                        <option value="Graphiste">Graphiste / UI Designer</option>
-                        <option value="SysAdmin">SysAdmin / DevOps</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="experience">Expérience & motivations *</label>
-                    <textarea id="experience" name="experience" placeholder="Parle-nous de ton expérience, tes projets passés, et pourquoi tu veux rejoindre Lumalia..." required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="portfolio">Portfolio / Liens (optionnel)</label>
-                    <input type="url" id="portfolio" name="portfolio" placeholder="https://...">
-                </div>
-                <button type="submit" class="form-submit">Envoyer ma candidature</button>
-            </form>
+        <h3>Builder / Architecte</h3>
+        <p>Conçois des mondes immersifs et des structures époustouflantes. Du spawn au monde minage, chaque bloc compte.</p>
+        <div class="job-meta">
+          <span class="job-tag">WorldEdit</span>
+          <span class="job-tag">VoxelSniper</span>
+          <span class="job-tag">Créatif</span>
         </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section" id="faq">
-        <div class="section-header">
-            <div class="section-label">04 · Questions</div>
-            <h2>Foire aux questions</h2>
-            <p>Tout ce que tu dois savoir avant de postuler.</p>
+        <div class="job-card-footer">
+          <div class="job-salary">Bénévolat <span>· Portfolio requis</span></div>
+          <button class="job-apply-btn" onclick="scrollToApply('Builder')">Postuler</button>
         </div>
-        <div class="faq-list">
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Les postes sont-ils rémunérés ?
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>Pour l'instant, tous les postes sont en bénévolat. Lumalia est un projet communautaire porté par la passion. Cependant, des rémunérations peuvent être envisagées à long terme selon l'évolution du projet.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Quel âge faut-il pour postuler ?
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>La majorité des postes requièrent d'avoir au moins 16 ans. Pour les postes à responsabilité (administration, sysadmin), nous préférons des candidats majeurs (18+). Des exceptions peuvent être faites selon la maturité démontrée.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Combien de temps dure le processus de recrutement ?
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>On te recontacte sous 48h après ta candidature. Si elle est retenue, un entretien vocal sur Discord est organisé dans la semaine suivante. La décision finale est communiquée sous 7 jours maximum.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Puis-je postuler pour plusieurs postes ?
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>Oui, tu peux postuler pour plusieurs postes si tu penses avoir les compétences pour chacun. Précise-le dans ta candidature et on discutera ensemble du poste le plus adapté à ton profil.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    Quel est le temps d'engagement requis ?
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-                </div>
-                <div class="faq-answer">
-                    <p>On demande un minimum de 5-10h par semaine selon le poste. L'important est la régularité et la communication. Si tu as des périodes d'indisponibilité, on s'adapte — on est une équipe, pas une entreprise.</p>
-                </div>
-            </div>
+      </div>
+
+      <div class="job-card reveal" data-poste="Modérateur">
+        <div class="job-card-glow"></div>
+        <div class="job-card-header">
+          <div class="job-icon mod">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <span class="job-status open">Ouvert</span>
         </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="footer-logo">
-            <div class="logo-icon">L</div>
-            <div class="logo-text">Luma<span>lia</span></div>
+        <h3>Modérateur</h3>
+        <p>Veille au bon déroulement des parties, modère le chat et aide les joueurs. Tu es la pierre angulaire de la communauté.</p>
+        <div class="job-meta">
+          <span class="job-tag">Communication</span>
+          <span class="job-tag">Réseau</span>
+          <span class="job-tag">Sérieux</span>
         </div>
-        <div class="footer-links">
-            <a href="https://lumania.fr">Site principal</a>
-            <a href="https://discord.gg/lumania">Discord</a>
-            <a href="https://twitter.com/lumania">Twitter/X</a>
-            <a href="https://tiktok.com/@lumania">TikTok</a>
+        <div class="job-card-footer">
+          <div class="job-salary">Bénévolat <span>· 16+ requis</span></div>
+          <button class="job-apply-btn" onclick="scrollToApply('Modérateur')">Postuler</button>
         </div>
-        <div class="footer-copy">
-            © 2026 Lumalia. Tous droits réservés. Construit avec ❤️ par la communauté.
+      </div>
+
+      <div class="job-card reveal" data-poste="Graphiste">
+        <div class="job-card-glow"></div>
+        <div class="job-card-header">
+          <div class="job-icon design">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+          </div>
+          <span class="job-status open">Ouvert</span>
         </div>
-    </footer>
+        <h3>Graphiste / UI Designer</h3>
+        <p>Crée l'identité visuelle de Lumalia : logos, bannières, textures, interfaces. Donne vie à notre univers graphiquement.</p>
+        <div class="job-meta">
+          <span class="job-tag">Photoshop</span>
+          <span class="job-tag">Figma</span>
+          <span class="job-tag">Illustrator</span>
+        </div>
+        <div class="job-card-footer">
+          <div class="job-salary">Bénévolat <span>· Portfolio requis</span></div>
+          <button class="job-apply-btn" onclick="scrollToApply('Graphiste')">Postuler</button>
+        </div>
+      </div>
 
-    <script>
-        // Smooth scroll pour les ancres
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
+      <div class="job-card reveal" data-poste="Community Manager">
+        <div class="job-card-glow"></div>
+        <div class="job-card-header">
+          <div class="job-icon community">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <span class="job-status closed">Complet</span>
+        </div>
+        <h3>Community Manager</h3>
+        <p>Gère nos réseaux sociaux, Discord et annonces. Tu sais créer l'engagement et animer une communauté.</p>
+        <div class="job-meta">
+          <span class="job-tag">Discord</span>
+          <span class="job-tag">Twitter/X</span>
+          <span class="job-tag">TikTok</span>
+        </div>
+        <div class="job-card-footer">
+          <div class="job-salary">Bénévolat <span>· Recrutement fermé</span></div>
+          <button class="job-apply-btn" disabled>Postuler</button>
+        </div>
+      </div>
 
-        // Scroll vers le formulaire avec pré-remplissage du poste
-        function scrollToApply(poste) {
-            const form = document.getElementById('apply');
-            const select = document.getElementById('poste');
-            if (select && poste) {
-                for (let i = 0; i < select.options.length; i++) {
-                    if (select.options[i].value === poste) {
-                        select.selectedIndex = i;
-                        break;
-                    }
-                }
-            }
-            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+      <div class="job-card reveal" data-poste="SysAdmin">
+        <div class="job-card-glow"></div>
+        <div class="job-card-header">
+          <div class="job-icon sysadmin">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+          </div>
+          <span class="job-status open">Ouvert</span>
+        </div>
+        <h3>SysAdmin / DevOps</h3>
+        <p>Gère l'infrastructure serveur, les déploiements et la sécurité. Tu maîtrises Linux, Docker et les réseaux.</p>
+        <div class="job-meta">
+          <span class="job-tag">Linux</span>
+          <span class="job-tag">Docker</span>
+          <span class="job-tag">Réseau</span>
+          <span class="job-tag">Sécurité</span>
+        </div>
+        <div class="job-card-footer">
+          <div class="job-salary">Bénévolat <span>· Expertise requise</span></div>
+          <button class="job-apply-btn" onclick="scrollToApply('SysAdmin')">Postuler</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // FAQ toggle
-        function toggleFaq(element) {
-            const item = element.parentElement;
-            const wasActive = item.classList.contains('active');
+  <!-- WHY JOIN -->
+  <section class="section" id="why">
+    <div class="section-header reveal">
+      <div class="section-label">02 · Pourquoi nous ?</div>
+      <h2>Ce qui t'attend chez Lumalia</h2>
+      <p>Rejoindre Lumalia, c'est plus qu'un poste. C'est une aventure.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+        </div>
+        <h3>Impact réel</h3>
+        <p>Ton travail est visible par des milliers de joueurs. Chaque feature, chaque build, chaque design compte.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </div>
+        <h3>Équipe soudée</h3>
+        <p>Une communauté de passionnés qui partagent la même vision. On avance ensemble, on apprend ensemble.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+        </div>
+        <h3>Expérience concrète</h3>
+        <p>Montée en compétences, projets réels à mettre sur ton CV, et un réseau dans l'univers du gaming.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="6"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01"></path><path d="M18 12h.01"></path></svg>
+        </div>
+        <h3>Environnement de jeu</h3>
+        <p>Accès privilégié aux serveurs, aux bêtas, et à l'évolution du projet en temps réel.</p>
+      </div>
+    </div>
+  </section>
 
-            // Ferme tous
-            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+  <!-- APPLICATION FORM -->
+  <section class="section" id="apply">
+    <div class="section-header reveal">
+      <div class="section-label">03 · Candidature</div>
+      <h2>Postule maintenant</h2>
+      <p>Remplis le formulaire ci-dessous. On te recontacte sous 48h.</p>
+    </div>
+    <div class="form-section reveal">
+      <div class="form-glow"></div>
+      <form id="applyForm" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pseudo">Pseudo Minecraft *</label>
+            <input type="text" id="pseudo" name="pseudo" placeholder="Ton pseudo in-game" required>
+          </div>
+          <div class="form-group">
+            <label for="discord">Discord *</label>
+            <input type="text" id="discord" name="discord" placeholder="pseudo#0000" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="ton@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="age">Âge *</label>
+            <input type="number" id="age" name="age" placeholder="16" min="13" max="99" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="poste">Poste visé *</label>
+          <select id="poste" name="poste" required>
+            <option value="">Sélectionne un poste</option>
+            <option value="Développeur Java">Développeur Java / Plugin</option>
+            <option value="Builder">Builder / Architecte</option>
+            <option value="Modérateur">Modérateur</option>
+            <option value="Graphiste">Graphiste / UI Designer</option>
+            <option value="SysAdmin">SysAdmin / DevOps</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="experience">Expérience & motivations *</label>
+          <textarea id="experience" name="experience" placeholder="Parle-nous de ton expérience, tes projets passés, et pourquoi tu veux rejoindre Lumalia..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="portfolio">Portfolio / Liens (optionnel)</label>
+          <input type="url" id="portfolio" name="portfolio" placeholder="https://...">
+        </div>
+        <button type="submit" class="form-submit" id="submitBtn">
+          <span class="btn-text">Envoyer ma candidature</span>
+          <span class="btn-loader"></span>
+        </button>
+        <div class="form-success" id="formSuccess">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Candidature envoyée avec succès ! Redirection vers le dashboard...
+        </div>
+      </form>
+    </div>
+  </section>
 
-            // Ouvre celui-ci si pas déjà actif
-            if (!wasActive) {
-                item.classList.add('active');
-            }
-        }
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="section-header reveal">
+      <div class="section-label">04 · Questions</div>
+      <h2>Foire aux questions</h2>
+      <p>Tout ce que tu dois savoir avant de postuler.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Les postes sont-ils rémunérés ?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>Pour l'instant, tous les postes sont en bénévolat. Lumalia est un projet communautaire porté par la passion. Cependant, des rémunérations peuvent être envisagées à long terme selon l'évolution du projet.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Quel âge faut-il pour postuler ?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>La majorité des postes requièrent d'avoir au moins 16 ans. Pour les postes à responsabilité (administration, sysadmin), nous préférons des candidats majeurs (18+). Des exceptions peuvent être faites selon la maturité démontrée.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Combien de temps dure le processus de recrutement ?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>On te recontacte sous 48h après ta candidature. Si elle est retenue, un entretien vocal sur Discord est organisé dans la semaine suivante. La décision finale est communiquée sous 7 jours maximum.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Puis-je postuler pour plusieurs postes ?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>Oui, tu peux postuler pour plusieurs postes si tu penses avoir les compétences pour chacun. Précise-le dans ta candidature et on discutera ensemble du poste le plus adapté à ton profil.</p>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          Quel est le temps d'engagement requis ?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>On demande un minimum de 5-10h par semaine selon le poste. L'important est la régularité et la communication. Si tu as des périodes d'indisponibilité, on s'adapte — on est une équipe, pas une entreprise.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // Formulaire
-        function handleSubmit(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('.form-submit');
-            const originalText = btn.textContent;
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">
+      <div class="logo-icon" style="width:32px;height:32px;">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="lumaliaGradFooter" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#f472b6"/>
+              <stop offset="50%" style="stop-color:#a78bfa"/>
+              <stop offset="100%" style="stop-color:#22d3ee"/>
+            </linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="18" fill="url(#lumaliaGradFooter)"/>
+          <path d="M25 75 L25 25 L45 25 L45 55 L75 55 L75 75 Z" fill="#0a0f0d"/>
+          <path d="M55 25 L75 25 L75 45 L55 45 Z" fill="#0a0f0d" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="logo-text">Luma<span>lia</span></div>
+    </div>
+    <div class="footer-links">
+      <a href="https://lumania.fr">Site principal</a>
+      <a href="https://discord.gg/lumania">Discord</a>
+      <a href="https://twitter.com/lumania">Twitter/X</a>
+      <a href="https://tiktok.com/@lumania">TikTok</a>
+    </div>
+    <div class="footer-copy">
+      © 2026 Lumalia. Tous droits réservés. Construit avec ❤️ par la communauté.
+    </div>
+  </footer>
 
-            btn.textContent = 'Envoi en cours...';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.textContent = '✓ Candidature envoyée !';
-                btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
-
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '';
-                    btn.disabled = false;
-                    e.target.reset();
-                }, 3000);
-            }, 1500);
-        }
-
-        // Animation au scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.job-card, .why-card, .faq-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(el);
-        });
-    </script>
-
+  <script src="index.js"></script>
 </body>
 </html>
