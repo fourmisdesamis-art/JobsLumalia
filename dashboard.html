@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard — Jobs Lumalia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css"><link rel="stylesheet" href="css/navbar.css"><link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body><div id="navbar"></div><main class="container dashboard">
+<header class="page-header"><div class="eyebrow">ESPACE STAFF</div><h1>Dashboard recrutement</h1><p>Gérez les candidatures reçues par Lumalia.</p></header>
+<div id="accessMessage" class="notice hidden"></div>
+<section id="dashboardContent" class="hidden"><div class="stats"><div class="stat"><span>Total</span><strong id="statTotal">0</strong></div><div class="stat"><span>En attente</span><strong id="statPending">0</strong></div><div class="stat"><span>Acceptées</span><strong id="statAccepted">0</strong></div><div class="stat"><span>Refusées</span><strong id="statRejected">0</strong></div></div>
+<div class="dashboard-grid"><aside class="filters"><h3>Filtrer</h3><button class="filter active" data-filter="all">Toutes</button><button class="filter" data-filter="pending">En attente</button><button class="filter" data-filter="accepted">Acceptées</button><button class="filter" data-filter="rejected">Refusées</button></aside><section><div id="applicationsList" class="applications-list"></div></section></div></section>
+</main><script src="js/navbar.js"></script><script src="js/auth.js"></script><script src="js/dashboard.js"></script>
+</body></html>
