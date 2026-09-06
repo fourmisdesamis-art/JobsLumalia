@@ -3,6 +3,7 @@
 // ============================================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
 import {
     getAuth
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
@@ -15,24 +16,15 @@ import {
 // ============================================================
 // CONFIGURATION FIREBASE
 // ============================================================
-//
-// Va dans :
-// Firebase Console
-// → Paramètres du projet
-// → Général
-// → Tes applications
-// → Configuration du SDK Firebase
-//
-// Puis remplace les valeurs ci-dessous par les tiennes.
-// ============================================================
 
 const firebaseConfig = {
-    apiKey: "TON_API_KEY",
-    authDomain: "TON_PROJET.firebaseapp.com",
-    projectId: "TON_PROJECT_ID",
-    storageBucket: "TON_PROJET.firebasestorage.app",
-    messagingSenderId: "TON_MESSAGING_SENDER_ID",
-    appId: "TON_APP_ID"
+    apiKey: "AIzaSyBSCqSsBTXk9Q8sBX88NgrdDHUAHT0Cq6I",
+    authDomain: "lumalia.firebaseapp.com",
+    projectId: "lumalia",
+    storageBucket: "lumalia.firebasestorage.app",
+    messagingSenderId: "189011821397",
+    appId: "1:189011821397:web:03c8609d35d488dce2a5dc",
+    measurementId: "G-4G4KMZCWFH"
 };
 
 
